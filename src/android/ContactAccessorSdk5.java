@@ -907,10 +907,13 @@ public class ContactAccessorSdk5 extends ContactAccessor {
     private JSONObject websiteQuery(Cursor cursor) {
         JSONObject website = new JSONObject();
         try {
+          if (cursor != null) {
             website.put("id", cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Website._ID)));
             website.put("pref", false); // Android does not store pref attribute
             website.put("value", cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Website.URL)));
             website.put("type", getContactType(cursor.getInt(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Website.TYPE))));
+            cursor.close();
+          }
         } catch (JSONException e) {
             Log.e(LOG_TAG, e.getMessage(), e);
         }
