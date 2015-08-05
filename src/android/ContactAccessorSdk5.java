@@ -359,7 +359,7 @@ public class ContactAccessorSdk5 extends ContactAccessor {
 
         if (c.getCount() > 0) {
 						
-            while (c.isOpen() && c.moveToNext() && (contacts.length() <= (limit - 1))) {
+            while (!c.isClosed() && c.moveToNext() && (contacts.length() <= (limit - 1))) {
                 try {
                     contactId = c.getString(colContactId);
                     rawId = c.getString(colRawContactId);
