@@ -358,7 +358,6 @@ public class ContactAccessorSdk5 extends ContactAccessor {
         int colEventType = c.getColumnIndex(ContactsContract.CommonDataKinds.Event.TYPE);
 
         if (c.getCount() > 0) {
-						
             while (!c.isClosed() && c.moveToNext() && (contacts.length() <= (limit - 1))) {
                 try {
                     contactId = c.getString(colContactId);
@@ -929,7 +928,7 @@ public class ContactAccessorSdk5 extends ContactAccessor {
     private JSONObject photoQuery(Cursor cursor, String contactId) {
         JSONObject photo = new JSONObject();
         try {
-            photo.put("id", cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Photo._ID)));
+            if ( !cursor.isClosed() ) photo.put("id", cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Photo._ID)));
             photo.put("pref", false);
             photo.put("type", "url");
             Uri person = ContentUris.withAppendedId(ContactsContract.Contacts.CONTENT_URI, (Long.valueOf(contactId)));
@@ -941,7 +940,7 @@ public class ContactAccessorSdk5 extends ContactAccessor {
             if (photoCursor == null) {
                 return null;
             } else {
-                if (!photoCursor.moveToFirst()) {
+                if (!c.isClosed() && !photoCursor.moveToFirst()) {
                     photoCursor.close();
                     return null;
                 }
