@@ -940,7 +940,7 @@ public class ContactAccessorSdk5 extends ContactAccessor {
             if (photoCursor == null) {
                 return null;
             } else {
-                if (!c.isClosed() && !photoCursor.moveToFirst()) {
+                if (!photoCursor.isClosed() && !photoCursor.moveToFirst()) {
                     photoCursor.close();
                     return null;
                 }
